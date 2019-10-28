@@ -22,7 +22,7 @@ class Form extends React.Component {
         event.preventDefault(); 
         console.log('form is submitting');
         console.log(this.state.name)
-        var state = this.state;
+        // var state = this.state;
         fetch('/prospects', {
             method: 'POST', 
             headers: {
