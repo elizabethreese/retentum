@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Form from './Components/form.jsx'
-import Data from './Components/data.jsx'
+import Table from './Components/table.jsx'
 
 function App() {
   return (
@@ -11,7 +11,8 @@ function App() {
       </header>
       <div className="FormArea">
         <Form />
-        <Data />
+        <Table />
+
       </div>
     </div>
   );
