@@ -43,7 +43,7 @@ class Form extends React.Component {
         
             console.log(body);
         });
-        
+        alert("Thank you for your interest. Someone will be in contact with you shortly!")
     };
 
     render() {
