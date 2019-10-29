@@ -1,4 +1,15 @@
 import React from 'react';
+import Login from './login.jsx';
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import Config from '../firebaseConfig';
+
+const firebaseAppAuth = Config.auth();
+
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
 
 class Table extends React.Component {
     constructor() {
@@ -29,6 +40,7 @@ renderData() {
                 <td>{notes}</td>
                 <td>{status}</td>
                 <td>{createdAt}</td>
+                <td><button>Edit</button></td>
                 <td><button>Delete</button></td>
             </tr>
            )
@@ -39,6 +51,13 @@ render() {
  
     return (
         // <p> {JSON.stringify(clients)}</p>
+     <div>
+        <div className="Logins">
+            <Login 
+            user={this.props.user}
+            signInWithGoogle={this.props.signInWithGoogle}
+            signOut={this.props.signOut}/>
+        </div>
         <div>
             <h1 id='title'>Prospects:</h1>
             <table id='prospects'>
@@ -60,8 +79,12 @@ render() {
             </tbody>
             </table>
          </div>
+        </div>
     )
 }
 };
 
-export default Table;
+export default withFirebaseAuth({
+    providers,
+    firebaseAppAuth,
+})(Table);
