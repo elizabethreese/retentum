@@ -34,6 +34,19 @@ app.get('/getProspectData', function(req,res) {
 })
 })
 
+//updating database to include a note
+app.post('/notes', function(req,res) {
+  console.log("got a request to update a note");
+  var notesSection= req.body;
+  var notes= req.body.notes;
+
+  db.prospects.update(
+    {notes: req.body.notes},
+    {where: {id:req.body.id}}
+  )
+  res.send('Success');
+ })
+
 
 
 app.listen(3000, function(){

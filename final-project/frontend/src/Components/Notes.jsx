@@ -1,0 +1,56 @@
+import React from 'react';
+
+class Notes extends React.Component {
+    constructor(props) {
+        super (props);
+        this.state= {
+            id: this.props.id,
+            notes: '',
+        }
+    this.notesHandleChange = this.notesHandleChange.bind(this);
+    this.notesHandleSubmit = this.notesHandleSubmit.bind(this);
+}
+
+notesHandleChange(event, key) {
+    this.setState({[key]: event.target.value});
+};
+
+notesHandleSubmit(event) {
+    event.preventDefault();
+    console.log('user has sent a note');
+    console.log(this.state.id)
+    fetch('/notes', {
+    method: 'POST', 
+    headers: {
+        "Content-Type": 'application/json'
+    },
+    body: JSON.stringify({
+        id: this.state.id,
+        notes: this.state.notes,
+        
+    })
+
+ })
+ .then(function(response) {
+    return 
+
+}).then(function(body) {
+
+    console.log(body);
+})
+};
+
+render () {
+return(
+ <div className="notes">
+<form onSubmit={this.notesHandleSubmit}>
+    <label><input name="notes" type="text" value={this.state.notes}
+    onChange={event => this.notesHandleChange(event, 'notes')}/>  </label>
+ <button type="submit">Save Notes</button>
+</form>
+</div>
+    )
+}
+};
+
+export default Notes;

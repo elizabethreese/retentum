@@ -21,9 +21,8 @@ class Login extends React.Component {
                             ? <button className = "logins"  onClick={signOut}>Sign out</button>
                             : <button className = "logins" onClick={signInWithGoogle}>Sign-In</button>
                     }
-        
-            </div>
-        );
+   </div>
+   )
     }
 };
 
