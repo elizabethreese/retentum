@@ -5,7 +5,7 @@ class Notes extends React.Component {
         super (props);
         this.state= {
             id: this.props.id,
-            notes: '',
+            notes: this.props.notes,
         }
     this.notesHandleChange = this.notesHandleChange.bind(this);
     this.notesHandleSubmit = this.notesHandleSubmit.bind(this);
@@ -37,20 +37,27 @@ notesHandleSubmit(event) {
 }).then(function(body) {
 
     console.log(body);
-})
+}).then(window.location.reload())
 };
 
 render () {
-return(
- <div className="notes">
-<form onSubmit={this.notesHandleSubmit}>
-    <label><input name="notes" type="text" value={this.state.notes}
-    onChange={event => this.notesHandleChange(event, 'notes')}/>  </label>
- <button type="submit">Save Notes</button>
-</form>
-</div>
-    )
+    const note = this.props
+    console.log(this.state.notes)
+    if (this.state.notes === !null){
+        return (
+            <div>
+                <p>{this.state.notes}</p>
+            </div>
+        );
+    } else {
+    return(
+    <div className="notes">
+    <form onSubmit={this.notesHandleSubmit}>
+        <label><input name="note" type="text" value={this.state.notes}
+        onChange={event => this.notesHandleChange(event, 'notes')}/>  </label>
+        <button type="submit">Change Note</button>
+    </form>
+    </div>)}}
 }
-};
 
 export default Notes;

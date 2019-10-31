@@ -7,7 +7,7 @@ class Form extends React.Component {
           name: '', 
           email: '',
           phone: '', 
-          caseType: 'Personal Injury<', 
+          caseType: 'Personal Injury', 
           comments: '',
         };
     this.handleChange = this.handleChange.bind(this);

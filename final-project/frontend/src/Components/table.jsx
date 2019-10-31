@@ -1,10 +1,13 @@
 import React from 'react';
 import Login from './login.jsx';
 import Notes from './Notes.jsx';
+import Status from './status.jsx';
+import Delete from './delete.jsx';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Config from '../firebaseConfig';
+
 
 const firebaseAppAuth = Config.auth();
 
@@ -13,8 +16,8 @@ const providers = {
 };
 
 class Table extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = 
         {
             prospects: [],
@@ -29,7 +32,7 @@ class Table extends React.Component {
 
 renderData() {
     return this.state.prospects.map((prospect, index) => {
-        const { id, name, email, phone, caseType, comments, createdAt, notes } = prospect
+        var { id, name, email, phone, caseType, comments, createdAt, notes, status } = prospect
         return (
             <tr key={id}>
                 <td>{id}</td>
@@ -38,16 +41,17 @@ renderData() {
                 <td>{phone}</td>
                 <td>{caseType}</td>
                 <td>{comments}</td>
-                <td>{createdAt}</td>
-                <td><Notes id={id} /> </td>
-                <td><form><label><select name="Status">
-                    <option>Open</option>
-                    <option>Closed</option>
-                    <option>Not Applicable</option>
-                    </select></label></form></td>
-            
-                <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td>
+                {createdAt}
+                </td>
+                <td>
+                    <Notes id={id} notes={notes}/></td> 
+                <td>
+                    <Status id={id} status={status}/>
+                </td>
+                <td>
+                    <Delete id={id}/>
+                </td>
             </tr>
            )
         })

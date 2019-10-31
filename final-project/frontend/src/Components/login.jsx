@@ -2,13 +2,16 @@ import React from 'react';
 import { NavLink, Switch, Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
 
 class Login extends React.Component { 
+      
+    
     render() {
+        
         const {
             user,
             signOut,
             signInWithGoogle,
         } = this.props;
-       
+
         return (
                 <div className="Logins">
                     {
