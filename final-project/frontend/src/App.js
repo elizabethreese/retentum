@@ -5,7 +5,7 @@ import Table from './Components/table.jsx'
 import Login from './Components/login.jsx'
 import Welcome from './Components/welcome.jsx'
 import PrivateRoute from './Components/privateRoute.jsx'
-import Config from "./firebaseConfig.js";
+import Config from './firebaseConfig.js'
 import { NavLink, Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import withFirebaseAuth from 'react-with-firebase-auth'

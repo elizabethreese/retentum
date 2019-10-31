@@ -7,7 +7,7 @@ class Form extends React.Component {
           name: '', 
           email: '',
           phone: '', 
-          caseType: 'personalInjury', 
+          caseType: 'Personal Injury', 
           comments: '',
         };
     this.handleChange = this.handleChange.bind(this);
@@ -59,12 +59,12 @@ class Form extends React.Component {
                 <input name="phone" type="number" value={this.state.phone} onChange={event => this.handleChange(event, 'phone')}/>
                 </label>
                 <label>Case Type
-                <select name="caseType" value={this.state.caseType} onChange={event => this.handleChange(event, 'caseType')} >
-                <option value="personalInjury">Personal Injury </option>
-                <option value="criminalDefense">Criminal Defense</option>
-                <option value="businessLit">Business Litigation</option>
-                <option value="familyLaw">Family Law</option>
-                <option value="other">Other/Unknown</option>
+                <select name="Case Type" value={this.state.caseType} onChange={event => this.handleChange(event, 'caseType')} >
+                <option value="Personal Injury">Personal Injury </option>
+                <option value="Criminal Defense">Criminal Defense</option>
+                <option value="Business Litigation">Business Litigation</option>
+                <option value="Family Law">Family Law</option>
+                <option value="Other/Unknown">Other/Unknown</option>
                 </select>
                 </label>
                 <label>Comments

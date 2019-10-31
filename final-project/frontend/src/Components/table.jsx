@@ -1,9 +1,13 @@
 import React from 'react';
 import Login from './login.jsx';
+import Notes from './Notes.jsx';
+import Status from './status.jsx';
+import Delete from './delete.jsx';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Config from '../firebaseConfig';
+
 
 const firebaseAppAuth = Config.auth();
 
@@ -12,8 +16,8 @@ const providers = {
 };
 
 class Table extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = 
         {
             prospects: [],
@@ -28,7 +32,7 @@ class Table extends React.Component {
 
 renderData() {
     return this.state.prospects.map((prospect, index) => {
-        const { id, name, email, phone, caseType, comments, notes, status, createdAt } = prospect
+        var { id, name, email, phone, caseType, comments, createdAt, notes, status } = prospect
         return (
             <tr key={id}>
                 <td>{id}</td>
@@ -37,11 +41,17 @@ renderData() {
                 <td>{phone}</td>
                 <td>{caseType}</td>
                 <td>{comments}</td>
-                <td>{notes}</td>
-                <td>{status}</td>
-                <td>{createdAt}</td>
-                <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td>
+                {createdAt}
+                </td>
+                <td>
+                    <Notes id={id} notes={notes}/></td> 
+                <td>
+                    <Status id={id} status={status}/>
+                </td>
+                <td>
+                    <Delete id={id}/>
+                </td>
             </tr>
            )
         })
@@ -69,9 +79,9 @@ render() {
                 <th>Phone Number</th>
                 <th>Case Type</th>
                 <th>Comments</th>
+                <th>Entry Date</th>
                 <th>Notes </th>
                 <th>Status </th>
-                <th>Entry Date</th>
             </tr> 
             </thead>
             <tbody>
