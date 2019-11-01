@@ -7,6 +7,7 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Config from '../firebaseConfig';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const firebaseAppAuth = Config.auth();
@@ -22,6 +23,8 @@ class Table extends React.Component {
         {
             prospects: [],
         }
+    this.compareBy.bind(this);
+    this.sortBy.bind(this);
     }
 
  componentDidMount() {
@@ -35,7 +38,7 @@ renderData() {
         var { id, name, email, phone, caseType, comments, createdAt, notes, status } = prospect
         return (
             <tr key={id}>
-                <td>{id}</td>
+                <td >{id}</td>
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>{phone}</td>
@@ -57,6 +60,21 @@ renderData() {
         })
      }
 
+compareBy(key) {
+    return function (a,b) {
+        if (a[key] < b[key]) return -1;
+        if (a[key] > b[key]) return 1;
+        return 0;
+    };
+}
+
+sortBy(key) {
+    let arrayCopy = [...this.state.prospects];
+    arrayCopy.sort(this.compareBy(key));
+    this.setState({prospects: arrayCopy});
+  }
+
+
 render() { 
  
     return (
@@ -73,13 +91,13 @@ render() {
             <table id='prospects'>
             <thead>
             <tr>
-                <th>Client ID</th>
-                <th>Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-                <th>Case Type</th>
-                <th>Comments</th>
-                <th>Entry Date</th>
+                <th>Client ID <button onClick={() => this.sortBy('id')}>Sort</button></th>
+                <th>Name<button onClick={() => this.sortBy('name')}>Sort</button></th>
+                <th>Email Address<button onClick={() => this.sortBy('email')}>Sort</button></th>
+                <th>Phone Number<button onClick={() => this.sortBy('phone')}>Sort</button></th>
+                <th>Case Type<button onClick={() => this.sortBy('caseType')}>Sort</button></th>
+                <th>Comments<button onClick={() => this.sortBy('comments')}>Sort</button></th>
+                <th>Entry Date<button onClick={() => this.sortBy('createdAt')}>Sort</button></th>
                 <th>Notes </th>
                 <th>Status </th>
             </tr> 
