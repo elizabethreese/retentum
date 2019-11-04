@@ -1,4 +1,7 @@
 import React from 'react';
+import '../App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button'
 
 class Status extends React.Component {
     constructor(props) {
@@ -49,9 +52,11 @@ class Status extends React.Component {
            <label><select name="Status" value={this.state.status} onChange= {event => this.statusHandleChange(event, 'status')}>
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
-                    <option value="Not Applicable">Not Applicable</option>
+                    <option value="Not Applicable">N/A</option>
                     </select>
-                    <button type="submit">Submit</button>
+                    <div style={{paddingTop: "14px"}}>
+                    <Button type="submit" variant="secondary" size="sm">Submit</Button>
+                    </div>
                     </label></form>
         </div>
         )}}

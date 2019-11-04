@@ -1,4 +1,6 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
 import Login from './login.jsx';
 import Notes from './Notes.jsx';
 import Status from './status.jsx';
@@ -7,6 +9,16 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Config from '../firebaseConfig';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
+// Bootstrap Imports
+import Navbar from 'react-bootstrap/Navbar'
+import Table from 'react-bootstrap/Table'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 
 const firebaseAppAuth = Config.auth();
@@ -15,13 +27,15 @@ const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
 
-class Table extends React.Component {
+class ProspectTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = 
         {
             prospects: [],
         }
+    this.compareBy.bind(this);
+    this.sortBy.bind(this);
     }
 
  componentDidMount() {
@@ -35,7 +49,7 @@ renderData() {
         var { id, name, email, phone, caseType, comments, createdAt, notes, status } = prospect
         return (
             <tr key={id}>
-                <td>{id}</td>
+                <td >{id}</td>
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>{phone}</td>
@@ -57,37 +71,56 @@ renderData() {
         })
      }
 
+compareBy(key) {
+    return function (a,b) {
+        if (a[key] < b[key]) return -1;
+        if (a[key] > b[key]) return 1;
+        return 0;
+    };
+}
+
+sortBy(key) {
+    let arrayCopy = [...this.state.prospects];
+    arrayCopy.sort(this.compareBy(key));
+    this.setState({prospects: arrayCopy});
+  }
+
+
 render() { 
  
     return (
         // <p> {JSON.stringify(clients)}</p>
-     <div>
+     <div className="App">
         <div className="Logins">
             <Login 
             user={this.props.user}
             signInWithGoogle={this.props.signInWithGoogle}
             signOut={this.props.signOut}/>
         </div>
-        <div>
-            <h1 id='title'>Prospects:</h1>
-            <table id='prospects'>
+            <div className = "tableheader">
+            <h1 style={{textAlign: "center", marginTop: "50px", marginBottom: "50px", color: "white", textShadow: "2px 2px 3px black"}}>Your Potential Clients:</h1>
+            </div>
+            <div className="tableArea">
+            <Table striped bordered hover size="sm" sortable>
             <thead>
             <tr>
-                <th>Client ID</th>
-                <th>Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-                <th>Case Type</th>
-                <th>Comments</th>
-                <th>Entry Date</th>
+                <th style={{width: "300px" }}>Client ID <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('id')}/></th>
+                <th style={{width: "200px"}}>Name <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('name')}/></th>
+                <th style={{width: "100px"}}>Email Address  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('email')}/></th>
+                <th style={{width: "300px"}}>Phone Number  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('phone')}/></th>
+                <th style={{width: "200px"}}>Case Type  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('caseType')}/></th>
+                <th style={{width: "200px"}}>Comments  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('comments')}/></th>
+                <th style={{width: "60px"}}>Date  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('createdAt')}/></th>
                 <th>Notes </th>
                 <th>Status </th>
+                <th></th>
             </tr> 
             </thead>
             <tbody>
               {this.renderData()}
             </tbody>
-            </table>
+            </Table>
+
          </div>
         </div>
     )
@@ -97,4 +130,4 @@ render() {
 export default withFirebaseAuth({
     providers,
     firebaseAppAuth,
-})(Table);
+})(ProspectTable);

@@ -1,4 +1,7 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
+import Button from 'react-bootstrap/Button'
 
 class Delete extends React.Component {
     constructor(props) {
@@ -32,8 +35,8 @@ class Delete extends React.Component {
 
     render() {
        return(
-         <div className="deleteSection">
-         <button onClick={event => this.delete(event, 'id')}>Delete</button>
+         <div className="deleteSection" style={{paddingTop: "22px"}}>
+         <Button onClick={event => this.delete(event, 'id')} variant="secondary" size="sm">Delete</Button>
         </div>  
         )}
         

@@ -1,4 +1,6 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button'
 
 class Notes extends React.Component {
     constructor(props) {
@@ -55,7 +57,7 @@ render () {
     <form onSubmit={this.notesHandleSubmit}>
         <label><input name="note" type="text" value={this.state.notes}
         onChange={event => this.notesHandleChange(event, 'notes')}/>  </label>
-        <button type="submit">Change Note</button>
+        <Button type="submit" variant="secondary" size="sm">Change Note</Button>
     </form>
     </div>)}}
 }

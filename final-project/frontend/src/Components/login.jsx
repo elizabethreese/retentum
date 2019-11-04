@@ -1,5 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
 import React from 'react';
 import { NavLink, Switch, Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
+import { faBalanceScaleRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+//Bootstrap Imports
+import Navbar from 'react-bootstrap/Navbar'
+import Button from 'react-bootstrap/Button'
 
 class Login extends React.Component { 
       
@@ -13,6 +21,12 @@ class Login extends React.Component {
         } = this.props;
 
         return (
+            <div className="App">
+            <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg" bg="dark">
+               <Navbar.Brand href="/"><h2 style={{fontWeight: "bolder"}}>Retentum  <FontAwesomeIcon icon={faBalanceScaleRight} /></h2></Navbar.Brand>
+               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+               <Navbar.Collapse className="justify-content-end" id="responsive-navbar-nav">
+               <Navbar.Text>  
                 <div className="Logins">
                     {
                         user
@@ -21,10 +35,14 @@ class Login extends React.Component {
                     }
                     {
                         user
-                            ? <button className = "logins"  onClick={signOut}>Sign out</button>
-                            : <button className = "logins" onClick={signInWithGoogle}>Sign-In</button>
+                            ? <Button className = "logins"  onClick={signOut} variant="light" size="sm">Sign out</Button>
+                            : <Button className = "logins" onClick={signInWithGoogle} variant="light" size="sm">Sign-In</Button>
                     }
-   </div>
+                </div>
+                </Navbar.Text>
+                </Navbar.Collapse>              
+            </Navbar>
+            </div>
    )
     }
 };
