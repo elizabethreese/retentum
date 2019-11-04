@@ -1,4 +1,6 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
 import Login from './login.jsx';
 import Notes from './Notes.jsx';
 import Status from './status.jsx';
@@ -7,7 +9,16 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import Config from '../firebaseConfig';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
+// Bootstrap Imports
+import Navbar from 'react-bootstrap/Navbar'
+import Table from 'react-bootstrap/Table'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 
 const firebaseAppAuth = Config.auth();
@@ -16,7 +27,7 @@ const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
 
-class Table extends React.Component {
+class ProspectTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = 
@@ -79,33 +90,37 @@ render() {
  
     return (
         // <p> {JSON.stringify(clients)}</p>
-     <div>
+     <div className="App">
         <div className="Logins">
             <Login 
             user={this.props.user}
             signInWithGoogle={this.props.signInWithGoogle}
             signOut={this.props.signOut}/>
         </div>
-        <div>
-            <h1 id='title'>Prospects:</h1>
-            <table id='prospects'>
+            <div className = "tableheader">
+            <h1 style={{textAlign: "center", marginTop: "50px", marginBottom: "50px", color: "white", textShadow: "2px 2px 3px black"}}>Your Potential Clients:</h1>
+            </div>
+            <div className="tableArea">
+            <Table striped bordered hover size="sm" sortable>
             <thead>
             <tr>
-                <th>Client ID <button onClick={() => this.sortBy('id')}>Sort</button></th>
-                <th>Name<button onClick={() => this.sortBy('name')}>Sort</button></th>
-                <th>Email Address<button onClick={() => this.sortBy('email')}>Sort</button></th>
-                <th>Phone Number<button onClick={() => this.sortBy('phone')}>Sort</button></th>
-                <th>Case Type<button onClick={() => this.sortBy('caseType')}>Sort</button></th>
-                <th>Comments<button onClick={() => this.sortBy('comments')}>Sort</button></th>
-                <th>Entry Date<button onClick={() => this.sortBy('createdAt')}>Sort</button></th>
+                <th style={{width: "300px" }}>Client ID <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('id')}/></th>
+                <th style={{width: "200px"}}>Name <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('name')}/></th>
+                <th style={{width: "100px"}}>Email Address  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('email')}/></th>
+                <th style={{width: "300px"}}>Phone Number  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('phone')}/></th>
+                <th style={{width: "200px"}}>Case Type  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('caseType')}/></th>
+                <th style={{width: "200px"}}>Comments  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('comments')}/></th>
+                <th style={{width: "60px"}}>Date  <FontAwesomeIcon icon={faSortDown} onClick={() => this.sortBy('createdAt')}/></th>
                 <th>Notes </th>
                 <th>Status </th>
+                <th></th>
             </tr> 
             </thead>
             <tbody>
               {this.renderData()}
             </tbody>
-            </table>
+            </Table>
+
          </div>
         </div>
     )
@@ -115,4 +130,4 @@ render() {
 export default withFirebaseAuth({
     providers,
     firebaseAppAuth,
-})(Table);
+})(ProspectTable);

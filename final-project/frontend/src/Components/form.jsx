@@ -1,6 +1,24 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'
+import Login from './login.jsx';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl'
+import FormGroup from 'react-bootstrap/FormGroup'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import Config from '../firebaseConfig';
 
-class Form extends React.Component { 
+const firebaseAppAuth = Config.auth();
+
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+
+class ContactForm extends React.Component { 
     constructor(props) { 
         super (props); 
         this.state= { 
@@ -48,32 +66,61 @@ class Form extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Name
-                <input name="name" type="text" value={this.state.name} onChange={event => this.handleChange(event, 'name')} />
-                </label>
-                <label>Email Address
-                <input name="email" type="text" value={this.state.email} onChange={event => this.handleChange(event, 'email')}/>
-                </label>
-                <label>Phone Number 
-                <input name="phone" type="number" value={this.state.phone} onChange={event => this.handleChange(event, 'phone')}/>
-                </label>
-                <label>Case Type
-                <select name="Case Type" value={this.state.caseType} onChange={event => this.handleChange(event, 'caseType')} >
+            <div>
+             <div className="Logins">
+            <Login 
+            user={this.props.user}
+            signInWithGoogle={this.props.signInWithGoogle}
+            signOut={this.props.signOut}/>
+        </div>
+        <div className="formtext">
+            <h1 style={{textShadow: "2px 2px 3px black"}}>Need a Lawyer?</h1>
+            <p>We are here to help! Fill out the form below, and we will provide your information to our lawyers.</p>
+        </div>
+        <div className="formArea">
+            <Form onSubmit={this.handleSubmit} className="form">
+            <Col sm>
+            <Form.Group controlId="nameInput">
+                <Form.Label>Name</Form.Label>
+                <Form.Control input name="name" type="text" value={this.state.name} onChange={event => this.handleChange(event, 'name')}>
+                </Form.Control>
+                </Form.Group>
+            <Form.Group controlId="emailInput">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control input name="email" type="text" value={this.state.email} onChange={event => this.handleChange(event, 'email')}>
+                </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="phoneInput">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control input name="phone" type="number" value={this.state.phone} onChange={event => this.handleChange(event, 'phone')}>
+                </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="caseInput">
+                <Form.Label>Case Type</Form.Label>
+                <Form.Control as="select" name="Case Type" value={this.state.caseType} onChange={event => this.handleChange(event, 'caseType')} >
                 <option value="Personal Injury">Personal Injury </option>
                 <option value="Criminal Defense">Criminal Defense</option>
                 <option value="Business Litigation">Business Litigation</option>
                 <option value="Family Law">Family Law</option>
                 <option value="Other/Unknown">Other/Unknown</option>
-                </select>
-                </label>
-                <label>Comments
-                <input name="comments" type="text" value={this.state.comments} onChange={event => this.handleChange(event, 'comments')}/>
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+                </Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Comments</Form.Label>
+                <Form.Control input name="comments" type="text" value={this.state.comments} onChange={event => this.handleChange(event, 'comments')}>
+                </Form.Control>
+                </Form.Group>
+                <Button variant="dark" type="submit">Submit</Button>
+                </Col>
+            </Form>
+            </div>
+            </div>
         )
     }
     }
 
-export default Form; 
+    export default withFirebaseAuth({
+        providers,
+        firebaseAppAuth,
+    })(ContactForm);
+    
